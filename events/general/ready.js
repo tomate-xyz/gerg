@@ -24,6 +24,26 @@ export default {
       }]
     })
 
+    const job = new CronJob(
+      '0 0 * * *',
+      function () {
+        User.findAll()
+          .then(users => {
+            users.forEach(user => {
+              user.questions = 15;
+              user.save();
+            });
+            console.log('Questions reset for all users');
+          })
+          .catch(error => {
+            console.error('Error resetting questions:', error);
+          });
+      },
+      null,
+      true,
+      'Europe/Berlin'
+    );
+
     try {
       const whitelistedUsers = await Whitelist.findAll({
         attributes: ['userID']
@@ -50,25 +70,5 @@ export default {
     } catch (error) {
       console.error("Error fetching whitelisted users:", error);
     }
-
-    const job = new CronJob(
-      '0 0 * * *',
-      function () {
-        User.findAll()
-          .then(users => {
-            users.forEach(user => {
-              user.questions = 15;
-              user.save();
-            });
-            console.log('Questions reset for all users.');
-          })
-          .catch(error => {
-            console.error('Error resetting questions:', error);
-          });
-      },
-      null,
-      true,
-      'Europe/Berlin'
-    );
   }
 };
