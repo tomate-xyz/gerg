@@ -54,10 +54,10 @@ export default {
         };
 
         const timeout = setTimeout(async () => {
-            console.log("No response received after 5 minutes.");
+            console.log("No response received after 10 minutes.");
             await interaction.deleteReply();
             modifyUserQuestions(userID, 1);
-        }, 300000);
+        }, 600000);
 
         try {
             console.log("Question start.");
