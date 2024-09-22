@@ -13,13 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/voice": "^0.17.0",
-    "@napi-rs/canvas": "^0.1.54",
     "axios": "^1.7.7",
     "cron": "^3.1.7",
     "discord.js": "^14.16.1",
     "dotenv": "^16.4.5",
     "fs": "0.0.1-security",
-    "libsodium-wrappers": "^0.7.15",
     "nodemon": "^3.1.4",
     "os": "^0.1.2",
     "sequelize": "^6.37.3",
