@@ -67,10 +67,20 @@ export default {
             modifyAskedQuestions(userID, 1);
 
             const responseMessage = response.data.response;
+            const chunkSize = 2000;
 
-            interaction.followUp({
-                content: responseMessage.substring(0, 2000)
-            });
+            for (let i = 0; i < responseMessage.length; i += chunkSize) {
+                const chunk = responseMessage.substring(i, i + chunkSize);
+                if (i === 0) {
+                    await interaction.followUp({
+                        content: chunk
+                    });
+                } else {
+                    await interaction.followUp({
+                        content: chunk
+                    });
+                }
+            }
 
             console.log("Question done.");
         } catch (error) {
