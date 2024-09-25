@@ -16,6 +16,11 @@ export default {
     async execute(interaction, client) {
         if (!interaction.isCommand()) return;
 
+        const {
+            commandName
+        } = interaction;
+        const command = client.commands.get(commandName);
+
         if (process.env.LOCKUP === "1" && interaction.user.id !== process.env.OWNER_ID) {
             return interaction.reply({
                 embeds: [easyEmbed("#ff0000", "The bot is currently locked for development purposes")],
@@ -37,11 +42,6 @@ export default {
                 ephemeral: true
             });
         }
-
-        const {
-            commandName
-        } = interaction;
-        const command = client.commands.get(commandName);
 
         if (!client.commands.has(commandName)) return;
 
