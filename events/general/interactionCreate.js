@@ -16,8 +16,14 @@ export default {
     async execute(interaction, client) {
         if (!interaction.isCommand()) return;
 
-        const userWhitelisted = await isUserWhitelisted(interaction.user.id);
+        if (process.env.LOCKUP === "1" && interaction.user.id !== process.env.OWNER_ID) {
+            return interaction.reply({
+                embeds: [easyEmbed("#ff0000", "The bot is currently locked for development purposes")],
+                ephemeral: true
+            });
+        }
 
+        const userWhitelisted = await isUserWhitelisted(interaction.user.id);
         if (!userWhitelisted) {
             return interaction.reply({
                 embeds: [easyEmbed("#ff0000", "You haven't been invited yet 🤫")],
@@ -38,13 +44,6 @@ export default {
             interaction.options._hoistedOptions.forEach(option => {
                 commandOptions += `${option.name}: ${option.value} `
             })
-        }
-
-        if (process.env.LOCKUP === "1" && interaction.user.id !== process.env.OWNER_ID) {
-            return interaction.reply({
-                embeds: [easyEmbed("#ff0000", "The bot is currently locked")],
-                ephemeral: true
-            });
         }
 
         if (command.devOnly && interaction.user.id !== process.env.OWNER_ID) {
