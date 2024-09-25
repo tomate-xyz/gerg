@@ -1,6 +1,7 @@
 import {
     User,
-    Whitelist
+    Whitelist,
+    Blacklist
 } from './database.js';
 
 const createUser = async (userID) => {
@@ -127,6 +128,14 @@ const getAskedQuestions = async (userID) => {
 
 const addUserToWhitelist = async (userID) => {
     try {
+        const isBlocked = await isUserBlacklisted(userID);
+        if (isBlocked) {
+            return {
+                success: false,
+                message: "User is blocked and cannot be added to the whitelist"
+            };
+        }
+
         const existing = await Whitelist.findOne({
             where: {
                 userID
@@ -145,7 +154,7 @@ const addUserToWhitelist = async (userID) => {
         console.log(`User ${userID} added to whitelist`);
         return {
             success: true,
-            message: `User ${userID} has been whitelisted`
+            message: `<@${userID}> has been whitelisted`
         };
     } catch (error) {
         console.error("Error adding user to whitelist:", error);
@@ -178,7 +187,7 @@ const removeUserFromWhitelist = async (userID) => {
         console.log(`User ${userID} removed from whitelist`);
         return {
             success: true,
-            message: `User ${userID} has been removed from the whitelist`
+            message: `<@${userID}> has been removed from the whitelist`
         };
     } catch (error) {
         console.error("Error removing user from whitelist:", error);
@@ -312,6 +321,86 @@ const isUserWhitelisted = async (userID) => {
     }
 };
 
+const addUserToBlacklist = async (userID) => {
+    try {
+        const existingBlacklist = await Blacklist.findOne({
+            where: {
+                userID
+            }
+        });
+        if (existingBlacklist) {
+            return {
+                success: false,
+                message: "User is already blocked"
+            };
+        }
+
+        await Blacklist.create({
+            userID
+        });
+        await removeUserFromWhitelist(userID);
+
+        console.log(`User ${userID} added to blacklist`);
+        return {
+            success: true,
+            message: `<@${userID}> has been blocked`
+        };
+    } catch (error) {
+        console.error("Error adding user to blacklist:", error);
+        return {
+            success: false,
+            message: "Error occurred while adding user to blacklist"
+        };
+    }
+};
+
+const removeUserFromBlacklist = async (userID) => {
+    try {
+        const existingBlacklist = await Blacklist.findOne({
+            where: {
+                userID
+            }
+        });
+        if (!existingBlacklist) {
+            return {
+                success: false,
+                message: "User is not blocked"
+            };
+        }
+
+        await Blacklist.destroy({
+            where: {
+                userID
+            }
+        });
+        console.log(`User ${userID} removed from blacklist.`);
+        return {
+            success: true,
+            message: `<@${userID}> has been unblocked`
+        };
+    } catch (error) {
+        console.error("Error removing user from blacklist:", error);
+        return {
+            success: false,
+            message: "Error occurred while removing user from the blacklist"
+        };
+    }
+};
+
+const isUserBlacklisted = async (userID) => {
+    try {
+        const user = await Blacklist.findOne({
+            where: {
+                userID
+            }
+        });
+        return !!user;
+    } catch (error) {
+        console.error("Error checking blacklist status:", error);
+        return false;
+    }
+};
+
 export {
     createUser,
     deleteUser,
@@ -320,7 +409,12 @@ export {
     getUserQuestions,
     getAskedQuestions,
     addUserToWhitelist,
+    removeUserFromWhitelist,
+    isUserWhitelisted,
     inviteUser,
+    removeInvitee,
     getInviteStatus,
-    isUserWhitelisted
+    addUserToBlacklist,
+    removeUserFromBlacklist,
+    isUserBlacklisted
 };

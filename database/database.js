@@ -39,6 +39,14 @@ const Whitelist = sequelize.define('Whitelist', {
     }
 });
 
+const Blacklist = sequelize.define('Blacklist', {
+    userID: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    }
+});
+
 sequelize.sync({
     alter: true
 }).then(() => {
@@ -47,5 +55,6 @@ sequelize.sync({
 
 export {
     User,
-    Whitelist
+    Whitelist,
+    Blacklist
 };
