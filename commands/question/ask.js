@@ -26,7 +26,7 @@ export default {
 
     async execute(interaction, client) {
         const userID = interaction.user.id;
-        const prompt = interaction.options.getString('prompt');
+        let prompt = interaction.options.getString('prompt');
 
         if (await getUserQuestions(userID) <= 0) {
             return interaction.reply({
@@ -35,15 +35,16 @@ export default {
             });
         }
 
-        if (prompt.length > 1000) {
+        if (prompt.length > 1200) {
             return interaction.reply({
-                embeds: [easyEmbed("#ff0000", "That prompt is too long, try something less than 1000 letters")],
+                embeds: [easyEmbed("#ff0000", "That prompt is too long, try something less than 1200 letters")],
                 ephemeral: true
             });
         }
 
         await interaction.deferReply();
 
+        prompt = `${interaction.user.displayName} asks you: ${prompt}`;
         modifyUserQuestions(userID, -1);
 
         const url = process.env.MODEL_URL;
