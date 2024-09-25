@@ -23,6 +23,13 @@ export default {
             });
         }
 
+        if (command.devOnly && interaction.user.id !== process.env.OWNER_ID) {
+            return interaction.reply({
+                embeds: [easyEmbed("#ff0000", "This command is inaccessible to you")],
+                ephemeral: true
+            });
+        }
+
         const userWhitelisted = await isUserWhitelisted(interaction.user.id);
         if (!userWhitelisted) {
             return interaction.reply({
@@ -44,13 +51,6 @@ export default {
             interaction.options._hoistedOptions.forEach(option => {
                 commandOptions += `${option.name}: ${option.value} `
             })
-        }
-
-        if (command.devOnly && interaction.user.id !== process.env.OWNER_ID) {
-            return interaction.reply({
-                embeds: [easyEmbed("#ff0000", "This command is currently inaccessible")],
-                ephemeral: true
-            });
         }
 
         if (command.cooldown) {
