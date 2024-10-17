@@ -9,6 +9,7 @@ import {
 } from "../../bot_modules/utils.js";
 
 export default {
+    devOnly: true,
     name: "invite",
     description: "Invite another user to use gerg",
     options: [{

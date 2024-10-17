@@ -15,6 +15,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default {
+    devOnly: true,
     name: 'ask',
     description: 'Ask the almighty gerg',
     options: [{

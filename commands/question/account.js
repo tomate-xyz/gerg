@@ -5,6 +5,7 @@ import {
 } from "../../database/handleData.js";
 
 export default {
+    devOnly: true,
     name: "account",
     description: "Show user account information",
 
