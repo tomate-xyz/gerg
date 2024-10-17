@@ -1,6 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from 'discord.js';
 
 export default {
+    devOnly: true,
     name: 'test-builders',
     description: 'Test Builders',
 

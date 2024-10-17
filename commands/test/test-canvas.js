@@ -5,6 +5,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from 'ffmpeg-static';
 
 export default {
+    devOnly: true,
     name: 'test-canvas',
     description: 'Test Canvas',
     options: [{
