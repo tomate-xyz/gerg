@@ -30,6 +30,12 @@ export default {
         let currentTime = Math.floor(Date.now() / 1000);
         let endTime = currentTime + time;
 
+        const generateId = () => {
+            return Math.random().toString(36).substring(2, 7).toUpperCase();
+        };
+
+        const uniqueId = generateId();
+
         const getRandomPosition = () => {
             const x = Math.floor(Math.random() * gridSize);
             const y = Math.floor(Math.random() * gridSize);
@@ -43,7 +49,7 @@ export default {
             }
         };
 
-        const framesDir = "./frames/"
+        const framesDir = `./frames/${uniqueId}/`;
         if (!fs.existsSync(framesDir)) {
             fs.mkdirSync(framesDir);
         }
@@ -99,7 +105,7 @@ export default {
             }
 
             frameCounter++;
-            const framePath = `./frames/${String(frameCounter).padStart(3, '0')}.png`;
+            const framePath = `${framesDir}/${String(frameCounter).padStart(3, '0')}.png`;
             const buffer = canvas.toBuffer('image/png');
             fs.writeFileSync(framePath, buffer);
 
