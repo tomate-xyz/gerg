@@ -249,13 +249,6 @@ export default {
             if (i.customId === 'move_left') user.x = (user.x - (userSpeed.get(userId) || 1) + gridSize) % gridSize;
             if (i.customId === 'move_right') user.x = (user.x + (userSpeed.get(userId) || 1)) % gridSize;
         
-            if (isNewUser) {
-                if (i.customId === 'place_pixel' || i.customId === 'erase_pixel') {
-                    await i.reply({ content: "You have just spawned and cannot place or erase a pixel yet!", ephemeral: true });
-                    return;
-                }
-            }
-        
             if (i.customId === 'select_color') {
                 user.color = i.values[0];
             }
