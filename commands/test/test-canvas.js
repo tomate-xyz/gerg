@@ -266,8 +266,14 @@ export default {
             }
         
             if (!isNewUser && i.customId === 'place_pixel') {
-                const pixel = { x: user.x, y: user.y, color: user.color };
-                placedPixels.push(pixel);
+                const existingPixelIndex = placedPixels.findIndex(pixel => pixel.x === user.x && pixel.y === user.y);
+                
+                if (existingPixelIndex !== -1) {
+                    placedPixels[existingPixelIndex] = { x: user.x, y: user.y, color: user.color };
+                } else {
+                    const pixel = { x: user.x, y: user.y, color: user.color };
+                    placedPixels.push(pixel);
+                }
             }
         
             if (!isNewUser && i.customId === 'erase_pixel') {
