@@ -51,7 +51,7 @@ export default {
 
         const framesDir = `./frames/${uniqueId}/`;
         if (!fs.existsSync(framesDir)) {
-            fs.mkdirSync(framesDir);
+            fs.mkdirSync(framesDir, { recursive: true });
         }
 
         let frameCounter = 0;
