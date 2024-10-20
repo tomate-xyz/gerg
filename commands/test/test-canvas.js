@@ -84,7 +84,7 @@ export default {
             }
 
             for (const [userId, user] of users) {
-                const { x, y, avatarURL } = user;
+                const { x, y, avatarURL, username } = user;
 
                 const avatar = await loadImage(avatarURL);
                 ctx.save();
@@ -92,6 +92,20 @@ export default {
                 const radius = cellSize / 2;
                 const centerX = x * cellSize + radius;
                 const centerY = y * cellSize + radius;
+
+                if (username === "kidsan.") { // yes, I hardcoded this
+                    ctx.fillStyle = '#ffffff';
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 2;
+                    ctx.font = '60px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+    
+                    const textX = x * cellSize + cellSize / 2;
+                    const textY = y * cellSize - 5;
+                    ctx.fillText("nerd", textX, textY);
+                    ctx.strokeText("nerd", textX, textY);
+                }
                 
                 ctx.beginPath();
                 ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
