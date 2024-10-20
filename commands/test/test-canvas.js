@@ -84,7 +84,7 @@ export default {
             }
 
             for (const [userId, user] of users) {
-                const { x, y, username, avatarURL } = user;
+                const { x, y, avatarURL } = user;
 
                 const avatar = await loadImage(avatarURL);
                 ctx.save();
