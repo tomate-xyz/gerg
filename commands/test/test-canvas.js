@@ -291,7 +291,7 @@ export default {
             const finalPixelsImageBuffer = await drawOnlyPixels();
             const finalTransparentPixelsImageBuffer = await drawTransparentPixels();
 
-            const videoPath = './art_video.mp4';
+            const videoPath = `${framesDir}/art_video.mp4`;
 
             await createVideoFromFrames(framesDir, videoPath);
 
