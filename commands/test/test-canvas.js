@@ -43,8 +43,6 @@ export default {
             }
         };
 
-        addUser(interaction.user.id, interaction.user.username, interaction.user.displayAvatarURL({ extension: 'png' }));
-
         const framesDir = "./frames/"
         if (!fs.existsSync(framesDir)) {
             fs.mkdirSync(framesDir);
