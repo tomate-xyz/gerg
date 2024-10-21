@@ -312,7 +312,7 @@ export default {
             const transparentPixelAttachment = new AttachmentBuilder(finalTransparentPixelsImageBuffer, { name: 'transparent_pixels.png' });
             const videoAttachment = new AttachmentBuilder(videoPath, { name: 'art_video.mp4' });
             
-            await interaction.editReply({
+            await interaction.followUp({
                 content: "🎨 **Ended!** Here is the final artwork:",
                 files: [videoAttachment, pixelAttachment, transparentPixelAttachment],
                 components: []
